@@ -55,6 +55,8 @@ exports.editBill = async (req, res) => {
   try {
     const {
       billCode,
+      updatedBillCode,
+      updatedDate,
       updatedConsumerName,
       updatedConsumerCity,
       updatedProductsPurchased,
@@ -72,6 +74,8 @@ exports.editBill = async (req, res) => {
     const updatedBillDetails = await Bill.findOneAndUpdate(
       { billCode },
       {
+        billCode: updatedBillCode,
+        date: updatedDate,
         consumerName: updatedConsumerName,
         consumerCity: updatedConsumerCity,
         productsPurchased: updatedProductsPurchased,
@@ -170,6 +174,31 @@ exports.restoreBill = async (req, res) => {
     return res.status(500).json({
       success: false,
       message: "error while restoring bill",
+    });
+  }
+};
+
+exports.fetchAllBill = async (req, res) => {
+  try {
+    const bills = await Bill.find();
+
+    if (!bills || bills.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No bills found.",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      bills,
+      message: "bills fetched successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: "error while fetching bills",
     });
   }
 };

@@ -208,6 +208,7 @@ exports.fetchAllBill = async (req, res) => {
     return res.status(200).json({
       success: true,
       bills,
+      totalBills,
       message: "Bills fetched successfully",
     });
   } catch (error) {

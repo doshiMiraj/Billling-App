@@ -8,6 +8,15 @@ const billSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    date: {
+      type: Date,
+      default: Date.now,
+      set: function (date) {
+        // Parse the input date string "dd, mm, yyyy" and convert it to a Date object
+        const [day, month, year] = date.split(", ").map(Number);
+        return new Date(year, month - 1, day);
+      },
+    },
     consumerName: {
       type: String,
       required: true,

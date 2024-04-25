@@ -4,6 +4,7 @@ exports.createBill = async (req, res) => {
   try {
     const {
       billCode,
+      date,
       consumerName,
       consumerCity,
       productsPurchased,
@@ -13,6 +14,7 @@ exports.createBill = async (req, res) => {
 
     if (
       !billCode ||
+      !date ||
       !consumerName ||
       !consumerCity ||
       !productsPurchased ||
@@ -27,6 +29,7 @@ exports.createBill = async (req, res) => {
 
     const billDetails = await Bill.create({
       billCode,
+      date,
       consumerName,
       consumerCity,
       productsPurchased,

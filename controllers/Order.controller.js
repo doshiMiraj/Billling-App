@@ -180,19 +180,35 @@ exports.restoreBill = async (req, res) => {
 
 exports.fetchAllBill = async (req, res) => {
   try {
-    const bills = await Bill.find();
+    const totalBills = (await Bill.find()).length;
 
-    if (!bills || bills.length === 0) {
-      return res.status(404).json({
-        success: false,
-        message: "No bills found.",
-      });
+    const page = Number(req.query.page) || 0;
+    const limit = Number(req.query.limit) || totalBills;
+    const { search } = req.query;
+
+    let pipeline = [];
+
+    if (search) {
+      const matchStage = {
+        $or: [
+          { billCode: { $regex: search, $options: "i" } },
+          { date: { $regex: search, $options: "i" } },
+          { consumerName: { $regex: search, $options: "i" } },
+          { consumerCity: { $regex: search, $options: "i" } },
+        ],
+      };
+
+      pipeline.push({ $match: matchStage });
     }
+
+    const bills = await Bill.aggregate(pipeline)
+      .skip(page * limit)
+      .limit(limit);
 
     return res.status(200).json({
       success: true,
       bills,
-      message: "bills fetched successfully",
+      message: "Bills fetched successfully",
     });
   } catch (error) {
     console.log(error);

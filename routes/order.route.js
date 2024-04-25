@@ -5,11 +5,13 @@ const {
   editBill,
   deleteBill,
   restoreBill,
+  fetchAllBill,
 } = require("../controllers/Order.controller");
 
 router.post("/", createBill);
 router.put("/edit-bill", editBill);
 router.delete("/delete-bill", deleteBill);
 router.put("/restore-bill", restoreBill);
+router.get("/", fetchAllBill);
 
 module.exports = router;

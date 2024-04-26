@@ -249,7 +249,7 @@ exports.fetchDeletedBill = async (req, res) => {
 
   return res.status(200).json({
     success: true,
-    filteredDeletedBills,
+    deletedBills: filteredDeletedBills,
     totalDeletedBills,
     message: "Fetched deleted products based on filter successfully",
   });

@@ -239,7 +239,7 @@ exports.fetchDeletedBill = async (req, res) => {
     });
   }
 
-  const filteredDeletedBills = deletedBills(
+  const filteredDeletedBills = deletedBills.filter(
     (bill) =>
       new RegExp(search, "i").test(bill.billCode) ||
       new RegExp(search, "i").test(bill.consumerName) ||

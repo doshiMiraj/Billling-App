@@ -219,3 +219,38 @@ exports.fetchAllBill = async (req, res) => {
     });
   }
 };
+
+exports.fetchDeletedBill = async (req, res) => {
+  const page = Number(req.query.page) || 0;
+  const limit = Number(req.query.limit) || 5;
+  const { search } = req.query;
+  const deletedBills = await Bill.findDeleted({ deleted: true })
+    .skip(page * limit)
+    .limit(limit);
+
+  const totalDeletedBills = deletedBills.length;
+
+  if (!search) {
+    return res.status(200).json({
+      success: true,
+      deletedBills,
+      totalDeletedBills,
+      message: "Deleted Bills fetched successfully",
+    });
+  }
+
+  const filteredDeletedBills = deletedBills(
+    (bill) =>
+      new RegExp(search, "i").test(bill.billCode) ||
+      new RegExp(search, "i").test(bill.consumerName) ||
+      new RegExp(search, "i").test(bill.consumerCity) ||
+      new RegExp(search, "i").test(bill.date)
+  );
+
+  return res.status(200).json({
+    success: true,
+    filteredDeletedBills,
+    totalDeletedBills,
+    message: "Fetched deleted products based on filter successfully",
+  });
+};

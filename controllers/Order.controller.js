@@ -239,7 +239,7 @@ exports.fetchDeletedBill = async (req, res) => {
     });
   }
 
-  const filteredDeletedBills = deletedBills(
+  const filteredDeletedBills = deletedBills.filter(
     (bill) =>
       new RegExp(search, "i").test(bill.billCode) ||
       new RegExp(search, "i").test(bill.consumerName) ||
@@ -249,7 +249,7 @@ exports.fetchDeletedBill = async (req, res) => {
 
   return res.status(200).json({
     success: true,
-    filteredDeletedBills,
+    deletedBills: filteredDeletedBills,
     totalDeletedBills,
     message: "Fetched deleted products based on filter successfully",
   });

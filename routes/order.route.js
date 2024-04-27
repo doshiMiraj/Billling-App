@@ -7,6 +7,7 @@ const {
   restoreBill,
   fetchAllBill,
   fetchDeletedBill,
+  getBillDetail,
 } = require("../controllers/Order.controller");
 
 router.post("/", createBill);
@@ -15,5 +16,6 @@ router.delete("/delete-bill", deleteBill);
 router.put("/restore-bill", restoreBill);
 router.get("/", fetchAllBill);
 router.get("/get-deleted-bills", fetchDeletedBill);
+router.get("/bill-detail", getBillDetail);
 
 module.exports = router;

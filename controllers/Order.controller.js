@@ -66,6 +66,7 @@ exports.getBillDetail = async (req, res) => {
 
     return res.status(200).json({
       success: true,
+      bill,
       message: "Bill details fetched successfully",
     });
   } catch (error) {

@@ -51,6 +51,32 @@ exports.createBill = async (req, res) => {
   }
 };
 
+exports.getBillDetail = async (req, res) => {
+  try {
+    const billCode = req.query?.billCode;
+
+    const bill = await Bill.findOne({ billCode });
+
+    if (!bill) {
+      return res.status(404).json({
+        success: false,
+        message: `Bill with ${billCode} bill code not found`,
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Bill details fetched successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: "error while fetching bill details",
+    });
+  }
+};
+
 exports.editBill = async (req, res) => {
   try {
     const {

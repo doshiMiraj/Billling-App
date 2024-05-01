@@ -12,8 +12,8 @@ const {
 
 router.post("/", createBill);
 router.put("/edit-bill", editBill);
-router.delete("/delete-bill", deleteBill);
-router.put("/restore-bill", restoreBill);
+router.delete("/delete-bill/:billCode", deleteBill);
+router.put("/restore-bill/:billCode", restoreBill);
 router.get("/", fetchAllBill);
 router.get("/get-deleted-bills", fetchDeletedBill);
 router.get("/bill-detail", getBillDetail);

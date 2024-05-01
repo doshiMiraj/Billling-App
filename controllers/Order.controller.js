@@ -135,7 +135,7 @@ exports.editBill = async (req, res) => {
 
 exports.deleteBill = async (req, res) => {
   try {
-    const { billCode } = req.body;
+    const { billCode } = req.params;
 
     if (!billCode) {
       return res.status(400).json({
@@ -171,7 +171,7 @@ exports.deleteBill = async (req, res) => {
 
 exports.restoreBill = async (req, res) => {
   try {
-    const { billCode } = req.body;
+    const { billCode } = req.params;
 
     if (!billCode) {
       return res.status(400).json({
@@ -189,8 +189,8 @@ exports.restoreBill = async (req, res) => {
     }
 
     deletedBill[0].deleted = false;
-
     const restoredBill = await deletedBill[0].save();
+
     return res.status(200).json({
       success: true,
       restoredBill,
